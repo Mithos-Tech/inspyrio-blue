@@ -1,0 +1,93 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "A portfolio project item",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "year": { "type": "string" },
+        "image": { "type": "string" },
+        "link": { "type": "string" },
+        "description": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "order": { "type": "number" },
+        "isFeatured": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "category", "year", "image", "link", "tags", "order", "isFeatured"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Portfolio filter category",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["name", "order"]
+    },
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "Contact form submission message",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "message", "createdAt"]
+    },
+    "AppContent": {
+      "title": "AppContent",
+      "description": "Editable text content for the website sections",
+      "type": "object",
+      "properties": {
+        "hero": {
+          "type": "object",
+          "properties": {
+            "label": { "type": "string" },
+            "titleLine1": { "type": "string" },
+            "titleLine2": { "type": "string" },
+            "subtitle": { "type": "string" }
+          }
+        }
+      }
+    },
+    "FAQ": {
+      "title": "FAQ",
+      "description": "Frequently Asked Question",
+      "type": "object",
+      "properties": {
+        "question": { "type": "string" },
+        "answer": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["question", "answer", "order"]
+    }
+  },
+  "firestore": {
+    "projects": {
+      "schema": "Project",
+      "description": "Collection of portfolio projects"
+    },
+    "categories": {
+      "schema": "Category",
+      "description": "Collection of project categories"
+    },
+    "content": {
+      "schema": "AppContent",
+      "description": "Singleton-like collection for app text content"
+    },
+    "inquiries": {
+      "schema": "Inquiry",
+      "description": "Collection of contact form messages"
+    },
+    "faqs": {
+      "schema": "FAQ",
+      "description": "Collection of frequently asked questions"
+    }
+  }
+}

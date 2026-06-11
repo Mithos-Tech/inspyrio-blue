@@ -1,0 +1,102 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.email == 'liberatos0714@gmail.com';
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Projects Rules
+    match /projects/{projectId} {
+      function isValidProject(data) {
+        let isCreation = resource == null;
+        let validTime = isCreation ? (data.createdAt == request.time) : (data.createdAt == resource.data.createdAt);
+        
+        return data.title is string && data.title.size() <= 100 &&
+               data.category is string && data.category.size() <= 60 &&
+               data.year is string && data.year.size() <= 10 &&
+               data.image is string && data.image.size() <= 1000 &&
+               data.link is string && data.link.size() <= 1000 &&
+               data.description is string && data.description.size() <= 200 &&
+               data.tags is list && data.tags.size() <= 15 &&
+               data.order is number &&
+               data.isFeatured is bool &&
+               validTime;
+      }
+
+      allow read: if true;
+      allow create: if isAdmin() && isValidProject(request.resource.data);
+      allow update: if isAdmin() && isValidProject(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Categories Rules
+    match /categories/{categoryId} {
+      function isValidCategory(data) {
+        return data.name is string && data.name.size() <= 50 &&
+               data.order is number;
+      }
+
+      allow read: if true;
+      allow create: if isAdmin() && isValidCategory(incoming());
+      allow update: if isAdmin() && isValidCategory(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // Content Rules (Hero, etc.)
+    match /content/{contentId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Inquiries Rules
+    match /inquiries/{inquiryId} {
+      function isValidInquiry(data) {
+        return data.name is string && data.name.size() <= 100 &&
+               data.email is string && data.email.size() <= 100 &&
+               data.message is string && data.message.size() <= 2000 &&
+               data.createdAt == request.time;
+      }
+
+      allow create: if isValidInquiry(request.resource.data);
+      allow read, delete: if isAdmin();
+    }
+
+    // FAQs Rules
+    match /faqs/{faqId} {
+      function isValidFAQ(data) {
+        return data.question is string && data.question.size() <= 200 &&
+               data.answer is string && data.answer.size() <= 1000 &&
+               data.order is number;
+      }
+
+      allow read: if true;
+      allow write: if isAdmin() && isValidFAQ(incoming());
+    }
+  }
+}
