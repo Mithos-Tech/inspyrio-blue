@@ -2,5 +2,5 @@
   "name": "Inspyrio Blue",
   "description": "Estudio de diseño web premium enfocado en crear experiencias digitales sofisticadas y de alto impacto.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

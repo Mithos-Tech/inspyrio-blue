@@ -1,7 +1,14 @@
 import { motion } from 'motion/react';
 import { Shield, Lock, Eye, FileText } from 'lucide-react';
+import { useSEO } from '@/src/hooks/useSEO';
 
 export const PrivacyPolicy = () => {
+  useSEO({
+    title: 'Política de Privacidad',
+    description: 'Conoce cómo protegemos tu información personal y garantizamos la seguridad y transparencia en todos nuestros servicios de diseño web.',
+    keywords: 'politica de privacidad, tratamiento de datos, seguridad de datos, aviso legal inspyrio'
+  });
+
   return (
     <motion.div
       initial={{ opacity: 0 }}

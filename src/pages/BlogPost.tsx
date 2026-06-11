@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, Share2, Check } from 'lucide-react';
 import { FadeInImage } from '@/src/components/ui/FadeInImage';
 import { useState } from 'react';
+import { useSEO } from '@/src/hooks/useSEO';
 
 const POSTS_CONTENT = {
   'minimalismo-web-moderna': {
@@ -59,6 +60,13 @@ export const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = POSTS_CONTENT[slug as keyof typeof POSTS_CONTENT];
   const [copied, setCopied] = useState(false);
+
+  useSEO({
+    title: post ? post.title : 'Artículo',
+    description: post ? post.content.replace(/<[^>]*>/g, '').substring(0, 160).trim().replace(/\s+/g, ' ') + '...' : 'Leer artículo premium de Inspyrio.',
+    image: post ? post.image : undefined,
+    keywords: post ? `blog inspyrio, ${post.category.toLowerCase()}, ${post.title.toLowerCase().replace(/[^a-zA-Z0-9\s]/g, '').split(' ').slice(0, 5).join(', ')}` : 'blog inspyrio'
+  });
 
   const handleShare = () => {
     if (navigator.share) {

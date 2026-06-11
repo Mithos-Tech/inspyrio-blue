@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FadeInImage } from '@/src/components/ui/FadeInImage';
+import { useSEO } from '@/src/hooks/useSEO';
 
 const POSTS = [
   {
@@ -25,6 +26,12 @@ const POSTS = [
 ];
 
 export const Blog = () => {
+  useSEO({
+    title: 'Blog de Diseño, UX y Tecnología',
+    description: 'Ideas, perspectivas y artículos de vanguardia sobre diseño web minimalista, usabilidad UX/UI, optimización técnica y tendencias digitales.',
+    keywords: 'blog de diseño web, articulos de UX/UI, minimalismo web, microinteracciones UX, tendencias de diseño digital, inspyrio blog'
+  });
+
   return (
     <motion.div
       initial={{ opacity: 0 }}

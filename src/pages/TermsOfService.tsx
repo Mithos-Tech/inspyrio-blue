@@ -1,7 +1,14 @@
 import { motion } from 'motion/react';
 import { Gavel, CheckCircle, AlertCircle, Briefcase } from 'lucide-react';
+import { useSEO } from '@/src/hooks/useSEO';
 
 export const TermsOfService = () => {
+  useSEO({
+    title: 'Términos de Servicio',
+    description: 'Consulta los acuerdos legales y términos de servicio de Inspyrio para garantizar proyectos y colaboraciones exitosas.',
+    keywords: 'terminos de servicio, condiciones de uso, contrato de diseño web, legal inspyrio'
+  });
+
   return (
     <motion.div
       initial={{ opacity: 0 }}

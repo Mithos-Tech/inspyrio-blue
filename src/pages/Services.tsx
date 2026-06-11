@@ -1,8 +1,8 @@
 import { motion } from 'motion/react';
-import { useEffect } from 'react';
 import { AGENCY_INFO } from '@/src/constants';
 import { FadeInImage } from '@/src/components/ui/FadeInImage';
 import { HashLink } from '@/src/components/layout/HashLink';
+import { useSEO } from '@/src/hooks/useSEO';
 
 const SERVICES_DATA = [
   {
@@ -58,11 +58,11 @@ const SERVICES_DATA = [
 ];
 
 export const Services = () => {
-  useEffect(() => {
-    const previousTitle = document.title;
-    document.title = `Servicios | ${AGENCY_INFO.name}`;
-    return () => { document.title = previousTitle; };
-  }, []);
+  useSEO({
+    title: 'Servicios de Diseño y Desarrollo Web',
+    description: 'Ofrecemos soluciones sofisticadas de diseño UI/UX, desarrollo de software frontend premium, optimización SEO avanzada y mantenimiento técnico de alto rendimiento.',
+    keywords: 'servicios de diseño web, diseño UI/UX, desarrollo frontend react, optimizacion SEO tecnica, soporte tecnico web, mantenimiento web corporativo'
+  });
 
   return (
     <motion.div

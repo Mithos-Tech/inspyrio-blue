@@ -8,6 +8,7 @@ import { db } from '@/src/lib/firebase';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { handleFirestoreError, OperationType } from '@/src/lib/FirebaseContext';
 import { FadeInImage } from '@/src/components/ui/FadeInImage';
+import { useSEO } from '@/src/hooks/useSEO';
 
 const STATIC_PROJECTS = [
   {
@@ -114,6 +115,12 @@ const STATIC_PROJECTS = [
 const STATIC_CATEGORIES = ['Todos', 'E-COMMERCE', 'TECNOLOGÍA', 'TURISMO', 'CORPORATIVO', 'WEDDING / VENUES', 'PODCAST', 'BIENESTAR ANIMAL'];
 
 export const Portfolio = () => {
+  useSEO({
+    title: 'Portafolio de Diseños Web de Élite',
+    description: 'Explora nuestra galería de proyectos premium. Sitios web a medida, e-commerce sofisticados e identidades digitales excepcionales de alto impacto.',
+    keywords: 'portafolio diseño web, sitios web premium, casos de éxito desarrollo web, diseño web minimalista, diseño de elite, inspyrio showcase'
+  });
+
   const [searchQuery, setSearchQuery] = useState('');
   const [projects, setProjects] = useState<any[]>(STATIC_PROJECTS);
   const [categories, setCategories] = useState<string[]>(STATIC_CATEGORIES);

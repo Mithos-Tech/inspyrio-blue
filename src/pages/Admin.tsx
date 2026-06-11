@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
+import { useSEO } from '@/src/hooks/useSEO';
 import { 
   Plus, 
   Trash2, 
@@ -63,7 +64,14 @@ interface FAQ {
 
 export const Admin = () => {
   const { user, login, logout, isAdmin, loading } = useFirebase();
-  const [activeTab, setActiveTab] = useState<'projects' | 'categories' | 'hero' | 'faqs'>('projects');
+
+  useSEO({
+    title: 'Panel de Control',
+    description: 'Administración del catálogo, testimonios, blog y portafolio de Inspyrio.',
+    keywords: 'noindex, nofollow'
+  });
+
+  const [activeTab, setActiveTab ] = useState<'projects' | 'categories' | 'hero' | 'faqs'>('projects');
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
