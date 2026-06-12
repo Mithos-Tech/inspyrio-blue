@@ -1,6 +1,18 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 
 export const Difference = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const assets = {
     velocity: "https://res.cloudinary.com/dkoshgzxo/image/upload/v1780542833/velocidad_blue_fp5w8y.svg",
     seo: "https://res.cloudinary.com/dk1tkgjpj/image/upload/v1771985897/seo_sui9tt.svg",
@@ -58,7 +70,7 @@ export const Difference = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="min-h-[380px] md:col-span-4 md:row-span-2 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] flex flex-col overflow-hidden group relative"
+            className="min-h-[385px] md:col-span-4 md:row-span-2 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] flex flex-col overflow-hidden group relative"
           >
             <div className="p-10 pb-0 text-center relative z-10">
               <h3 className="text-2xl md:text-3xl font-medium text-white mb-4 tracking-tight">SEO y Conversión</h3>
@@ -67,7 +79,7 @@ export const Difference = () => {
               </p>
             </div>
             
-            <div className="absolute bottom-0 left-0 w-full px-4 pb-6 pointer-events-none select-none">
+            <div className="relative mt-8 md:absolute md:bottom-0 md:left-0 w-full px-6 md:px-4 pb-6 pointer-events-none select-none">
               <svg 
                 viewBox="0 0 500 310" 
                 fill="none" 
@@ -132,44 +144,64 @@ export const Difference = () => {
                 ))}
 
                 {/* Gradient area fill */}
-                <motion.path 
-                  d="M 40,260 C 59,260 59,241 78,241 C 97,241 97,216 116,216 C 135,216 135,216 154,216 C 173,216 173,184 192,184 C 211,184 211,184 230,184 C 249,184 249,138 268,138 C 287,138 287,133 306,133 C 325,133 325,98 344,98 C 363,98 363,74 382,74 C 401,74 401,61 420,61 C 439,61 439,10 458,10 L 458,265 L 40,265 Z" 
-                  fill="url(#areaGradient)" 
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.6, duration: 1.2, ease: "easeOut" }}
-                />
+                {isMobile ? (
+                  <path 
+                    d="M 40,260 C 59,260 59,241 78,241 C 97,241 97,216 116,216 C 135,216 135,216 154,216 C 173,216 173,184 192,184 C 211,184 211,184 230,184 C 249,184 249,138 268,138 C 287,138 287,133 306,133 C 325,133 325,98 344,98 C 363,98 363,74 382,74 C 401,74 401,61 420,61 C 439,61 439,10 458,10 L 458,265 L 40,265 Z" 
+                    fill="url(#areaGradient)" 
+                    opacity="0.85"
+                  />
+                ) : (
+                  <motion.path 
+                    d="M 40,260 C 59,260 59,241 78,241 C 97,241 97,216 116,216 C 135,216 135,216 154,216 C 173,216 173,184 192,184 C 211,184 211,184 230,184 C 249,184 249,138 268,138 C 287,138 287,133 306,133 C 325,133 325,98 344,98 C 363,98 363,74 382,74 C 401,74 401,61 420,61 C 439,61 439,10 458,10 L 458,265 L 40,265 Z" 
+                    fill="url(#areaGradient)" 
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.6, duration: 1.2, ease: "easeOut" }}
+                  />
+                )}
 
-                {/* Neon blur stroke layer for glow */}
-                <motion.path 
-                  d="M 40,260 C 59,260 59,241 78,241 C 97,241 97,216 116,216 C 135,216 135,216 154,216 C 173,216 173,184 192,184 C 211,184 211,184 230,184 C 249,184 249,138 268,138 C 287,138 287,133 306,133 C 325,133 325,98 344,98 C 363,98 363,74 382,74 C 401,74 401,61 420,61 C 439,61 439,10 458,10" 
-                  fill="none" 
-                  stroke="#2563EB" 
-                  strokeWidth="4" 
-                  strokeLinecap="round"
-                  opacity="0.4"
-                  filter="url(#glow)"
-                  initial={{ pathLength: 0 }}
-                  whileInView={{ pathLength: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.6, ease: "easeInOut" }}
-                />
+                {/* Neon blur stroke layer for glow (Desktop-only to prevent Android WebKit trailing artifacts) */}
+                {!isMobile && (
+                  <motion.path 
+                    d="M 40,260 C 59,260 59,241 78,241 C 97,241 97,216 116,216 C 135,216 135,216 154,216 C 173,216 173,184 192,184 C 211,184 211,184 230,184 C 249,184 249,138 268,138 C 287,138 287,133 306,133 C 325,133 325,98 344,98 C 363,98 363,74 382,74 C 401,74 401,61 420,61 C 439,61 439,10 458,10" 
+                    fill="none" 
+                    stroke="#2563EB" 
+                    strokeWidth="4" 
+                    strokeLinecap="round"
+                    opacity="0.4"
+                    filter="url(#glow)"
+                    initial={{ pathLength: 0 }}
+                    whileInView={{ pathLength: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.6, ease: "easeInOut" }}
+                  />
+                )}
 
                 {/* Primary trend line */}
-                <motion.path 
-                  d="M 40,260 C 59,260 59,241 78,241 C 97,241 97,216 116,216 C 135,216 135,216 154,216 C 173,216 173,184 192,184 C 211,184 211,184 230,184 C 249,184 249,138 268,138 C 287,138 287,133 306,133 C 325,133 325,98 344,98 C 363,98 363,74 382,74 C 401,74 401,61 420,61 C 439,61 439,10 458,10" 
-                  fill="none" 
-                  stroke="url(#lineGradient)" 
-                  strokeWidth="2.5" 
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0 }}
-                  whileInView={{ pathLength: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.6, ease: "easeInOut" }}
-                />
+                {isMobile ? (
+                  <path 
+                    d="M 40,260 C 59,260 59,241 78,241 C 97,241 97,216 116,216 C 135,216 135,216 154,216 C 173,216 173,184 192,184 C 211,184 211,184 230,184 C 249,184 249,138 268,138 C 287,138 287,133 306,133 C 325,133 325,98 344,98 C 363,98 363,74 382,74 C 401,74 401,61 420,61 C 439,61 439,10 458,10" 
+                    fill="none" 
+                    stroke="url(#lineGradient)" 
+                    strokeWidth="2.5" 
+                    strokeLinecap="round"
+                  />
+                ) : (
+                  <motion.path 
+                    d="M 40,260 C 59,260 59,241 78,241 C 97,241 97,216 116,216 C 135,216 135,216 154,216 C 173,216 173,184 192,184 C 211,184 211,184 230,184 C 249,184 249,138 268,138 C 287,138 287,133 306,133 C 325,133 325,98 344,98 C 363,98 363,74 382,74 C 401,74 401,61 420,61 C 439,61 439,10 458,10" 
+                    fill="none" 
+                    stroke="url(#lineGradient)" 
+                    strokeWidth="2.5" 
+                    strokeLinecap="round"
+                    initial={{ pathLength: 0 }}
+                    whileInView={{ pathLength: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.6, ease: "easeInOut" }}
+                  />
+                )}
 
-                {/* Vertex dot markers with individual animations */}
+                {/* Vertex dot markers */}
                 {[
                   { x: 40, y: 260 },
                   { x: 78, y: 241 },
@@ -185,36 +217,52 @@ export const Difference = () => {
                   { x: 458, y: 10 }
                 ].map((pt, i) => (
                   <g key={`point-${i}`}>
-                    {/* Pulsing glow ring on each point */}
-                    <motion.circle 
-                      cx={pt.x} 
-                      cy={pt.y} 
-                      r="4" 
-                      fill={i < 6 ? "#2563EB" : i < 10 ? "#00D2FF" : "#a855f7"} 
-                      opacity="0.6"
-                      filter="url(#dotGlow)"
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.05 + 0.6, type: 'spring', stiffness: 300, damping: 15 }}
-                    />
-                    {/* White center point */}
-                    <motion.circle 
-                      cx={pt.x} 
-                      cy={pt.y} 
-                      r="2" 
-                      fill="#FFFFFF" 
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.05 + 0.7, type: 'spring', stiffness: 300, damping: 15 }}
-                    />
+                    {isMobile ? (
+                      /* Solid, high-contrast markers on mobile (no blur to avoid GPA trails) */
+                      <circle 
+                        cx={pt.x} 
+                        cy={pt.y} 
+                        r="3.5" 
+                        fill={i < 6 ? "#2563EB" : i < 10 ? "#00D2FF" : "#a855f7"} 
+                      />
+                    ) : (
+                      <>
+                        {/* Pulsing glow ring on each point */}
+                        <motion.circle 
+                          cx={pt.x} 
+                          cy={pt.y} 
+                          r="4" 
+                          fill={i < 6 ? "#2563EB" : i < 10 ? "#00D2FF" : "#a855f7"} 
+                          opacity="0.6"
+                          filter="url(#dotGlow)"
+                          initial={{ scale: 0 }}
+                          whileInView={{ scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: i * 0.05 + 0.6, type: 'spring', stiffness: 300, damping: 15 }}
+                        />
+                        {/* White center point */}
+                        <motion.circle 
+                          cx={pt.x} 
+                          cy={pt.y} 
+                          r="2" 
+                          fill="#FFFFFF" 
+                          initial={{ scale: 0 }}
+                          whileInView={{ scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: i * 0.05 + 0.7, type: 'spring', stiffness: 300, damping: 15 }}
+                        />
+                      </>
+                    )}
                   </g>
                 ))}
 
                 {/* Monthly X Axis Labels */}
                 {["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"].map((month, i) => {
                   const xPositions = [40, 78, 116, 154, 192, 230, 268, 306, 344, 382, 420, 458];
+                  
+                  // Mobile-first: Hide alternate months on mobile for a spacious, high-end look
+                  if (isMobile && i % 2 !== 0) return null;
+                  
                   return (
                     <text 
                       key={`month-lbl-${i}`}
@@ -224,7 +272,7 @@ export const Difference = () => {
                       fontSize="9.5" 
                       fontFamily="sans-serif"
                       textAnchor="middle"
-                      className="font-medium tracking-tight"
+                      className="font-medium tracking-tight animate-fade-in"
                     >
                       {month}
                     </text>
@@ -241,6 +289,7 @@ export const Difference = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             className="min-h-[160px] py-8 md:py-0 md:col-span-4 md:row-span-1 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] p-8 md:p-10 flex items-center relative overflow-hidden group"
+            style={{ transform: 'translateZ(0)' }}
           >
             <div className="relative z-10 w-[55%] md:w-[60%]">
               <p className="text-white/80 text-[11px] mb-3 font-light leading-relaxed tracking-tight uppercase">
@@ -291,6 +340,7 @@ export const Difference = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
             className="min-h-[160px] py-8 md:py-0 md:col-span-8 md:row-span-1 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] flex items-center relative overflow-hidden group"
+            style={{ transform: 'translateZ(0)' }}
           >
             <div className="relative z-10 w-[50%] md:w-1/2 p-8 md:pl-12">
               <h3 className="text-2xl md:text-3xl font-medium text-white mb-3 tracking-tight leading-tight">UX Intuitiva</h3>
