@@ -222,7 +222,7 @@ export const Portfolio = () => {
                 placeholder="Buscar proyectos..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-grow bg-transparent border-none text-white text-base md:text-lg font-light focus:outline-none placeholder:text-white/10 tracking-tight"
+                className="flex-grow min-w-0 w-full bg-transparent border-none text-white text-base md:text-lg font-light focus:outline-none placeholder:text-white/10 tracking-tight"
               />
               {searchQuery && (
                 <button 

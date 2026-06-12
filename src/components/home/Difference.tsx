@@ -22,14 +22,14 @@ export const Difference = () => {
         </div>
 
         {/* Bento Grid - Clean & Sharp Architecture */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[360px] md:auto-rows-[260px]">
+        <div className="flex flex-col md:grid md:grid-cols-12 gap-6 md:auto-rows-[260px]">
           
           {/* 1. Velocidad de Carga Extrema (Top Left - Tall) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="md:col-span-4 md:row-span-2 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] flex flex-col overflow-hidden group relative"
+            className="min-h-[340px] md:col-span-4 md:row-span-2 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] flex flex-col overflow-hidden group relative"
           >
             <div className="p-10 pb-0 text-center relative z-10">
               <h3 className="text-2xl md:text-3xl font-medium text-white mb-4 tracking-tight">Velocidad de <br /> Carga Extrema</h3>
@@ -58,7 +58,7 @@ export const Difference = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="md:col-span-4 md:row-span-2 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] flex flex-col overflow-hidden group relative"
+            className="min-h-[380px] md:col-span-4 md:row-span-2 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] flex flex-col overflow-hidden group relative"
           >
             <div className="p-10 pb-0 text-center relative z-10">
               <h3 className="text-2xl md:text-3xl font-medium text-white mb-4 tracking-tight">SEO y Conversión</h3>
@@ -240,7 +240,7 @@ export const Difference = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="md:col-span-4 md:row-span-1 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] p-8 md:p-10 flex items-center relative overflow-hidden group"
+            className="min-h-[160px] py-8 md:py-0 md:col-span-4 md:row-span-1 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] p-8 md:p-10 flex items-center relative overflow-hidden group"
           >
             <div className="relative z-10 w-[55%] md:w-[60%]">
               <p className="text-white/80 text-[11px] mb-3 font-light leading-relaxed tracking-tight uppercase">
@@ -254,7 +254,7 @@ export const Difference = () => {
                 alt="Code" 
                 loading="lazy"
                 decoding="async"
-                className="h-full w-auto max-w-none object-contain object-left translate-x-[65%] md:translate-x-[35%]"
+                className="h-full w-auto max-w-none object-contain object-left translate-x-[40%] sm:translate-x-[20%] md:translate-x-[35%]"
               />
             </div>
           </motion.div>
@@ -265,7 +265,7 @@ export const Difference = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="md:col-span-4 md:row-span-2 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] relative overflow-hidden group"
+            className="min-h-[320px] md:col-span-4 md:row-span-2 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] relative overflow-hidden group"
           >
             <motion.img 
               src={assets.mobile} 
@@ -290,7 +290,7 @@ export const Difference = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="md:col-span-8 md:row-span-1 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] flex items-center relative overflow-hidden group"
+            className="min-h-[160px] py-8 md:py-0 md:col-span-8 md:row-span-1 rounded-[40px] border-[0.5px] border-white/10 bg-[#0A0A0A] flex items-center relative overflow-hidden group"
           >
             <div className="relative z-10 w-[50%] md:w-1/2 p-8 md:pl-12">
               <h3 className="text-2xl md:text-3xl font-medium text-white mb-3 tracking-tight leading-tight">UX Intuitiva</h3>
@@ -304,7 +304,7 @@ export const Difference = () => {
                 alt="UX" 
                 loading="lazy"
                 decoding="async"
-                className="h-[120%] md:h-[150%] w-auto max-w-none object-contain object-left translate-x-[55%] md:translate-x-[15%]"
+                className="h-[120%] md:h-[150%] w-auto max-w-none object-contain object-left translate-x-[35%] sm:translate-x-[15%] md:translate-x-[15%]"
               />
             </div>
           </motion.div>

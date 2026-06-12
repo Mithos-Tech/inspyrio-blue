@@ -294,9 +294,9 @@ export default function FloatingLines({
     
     // Smooth frame rate on mobile by limiting DPR and reducing line density
     const dprLimit = isMobileDevice ? 0.95 : 2;
-    const activeTopWave = isMobileDevice ? false : enabledWaves.includes('top');
+    const activeTopWave = enabledWaves.includes('top');
     const activeMiddleWave = enabledWaves.includes('middle');
-    const activeBottomWave = isMobileDevice ? false : enabledWaves.includes('bottom');
+    const activeBottomWave = enabledWaves.includes('bottom');
 
     const getDynamicLineCount = (waveType: string) => {
       let raw = 6;
@@ -306,7 +306,7 @@ export default function FloatingLines({
         const index = enabledWaves.indexOf(waveType);
         raw = (lineCount as number[])[index] ?? 6;
       }
-      return isMobileDevice ? Math.min(raw, 5) : raw;
+      return isMobileDevice ? Math.min(raw, 3) : raw;
     };
 
     const effTopLineCount = activeTopWave ? getDynamicLineCount('top') : 0;
