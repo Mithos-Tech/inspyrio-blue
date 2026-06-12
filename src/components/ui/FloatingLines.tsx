@@ -290,14 +290,40 @@ export default function FloatingLines({
   useEffect(() => {
     if (!containerRef.current) return;
 
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+    
+    // Smooth frame rate on mobile by limiting DPR and reducing line density
+    const dprLimit = isMobileDevice ? 0.95 : 2;
+    const activeTopWave = isMobileDevice ? false : enabledWaves.includes('top');
+    const activeMiddleWave = enabledWaves.includes('middle');
+    const activeBottomWave = isMobileDevice ? false : enabledWaves.includes('bottom');
+
+    const getDynamicLineCount = (waveType: string) => {
+      let raw = 6;
+      if (typeof lineCount === 'number') {
+        raw = lineCount;
+      } else {
+        const index = enabledWaves.indexOf(waveType);
+        raw = (lineCount as number[])[index] ?? 6;
+      }
+      return isMobileDevice ? Math.min(raw, 5) : raw;
+    };
+
+    const effTopLineCount = activeTopWave ? getDynamicLineCount('top') : 0;
+    const effMiddleLineCount = activeMiddleWave ? getDynamicLineCount('middle') : 0;
+    const effBottomLineCount = activeBottomWave ? getDynamicLineCount('bottom') : 0;
+
+    const useInteractive = isMobileDevice ? false : interactive;
+    const useParallax = isMobileDevice ? false : parallax;
+
     const scene = new Scene();
 
     const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
     camera.position.z = 1;
 
-    const renderer = new WebGLRenderer({ antialias: true, alpha: true });
+    const renderer = new WebGLRenderer({ antialias: !isMobileDevice, alpha: true });
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, dprLimit));
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
     containerRef.current.appendChild(renderer.domElement);
@@ -307,13 +333,13 @@ export default function FloatingLines({
       iResolution: { value: new Vector3(1, 1, 1) },
       animationSpeed: { value: animationSpeed },
 
-      enableTop: { value: enabledWaves.includes('top') },
-      enableMiddle: { value: enabledWaves.includes('middle') },
-      enableBottom: { value: enabledWaves.includes('bottom') },
+      enableTop: { value: activeTopWave },
+      enableMiddle: { value: activeMiddleWave },
+      enableBottom: { value: activeBottomWave },
 
-      topLineCount: { value: topLineCount },
-      middleLineCount: { value: middleLineCount },
-      bottomLineCount: { value: bottomLineCount },
+      topLineCount: { value: effTopLineCount },
+      middleLineCount: { value: effMiddleLineCount },
+      bottomLineCount: { value: effBottomLineCount },
 
       topLineDistance: { value: topLineDistance },
       middleLineDistance: { value: middleLineDistance },
@@ -338,12 +364,12 @@ export default function FloatingLines({
       },
 
       iMouse: { value: new Vector2(-1000, -1000) },
-      interactive: { value: interactive },
+      interactive: { value: useInteractive },
       bendRadius: { value: bendRadius },
       bendStrength: { value: bendStrength },
       bendInfluence: { value: 0 },
 
-      parallax: { value: parallax },
+      parallax: { value: useParallax },
       parallaxStrength: { value: parallaxStrength },
       parallaxOffset: { value: new Vector2(0, 0) },
 
